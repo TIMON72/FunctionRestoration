@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace FunctionRestoration.Windows
 {
@@ -18,9 +7,23 @@ namespace FunctionRestoration.Windows
     /// </summary>
     public partial class Step3 : UserControl
     {
+        static Step3 instance;
+
+        public static object Context  { private set; get; }
+        public static Step3 Instance
+        {
+            get
+            {
+                if (instance is null)
+                    instance = new Step3();
+                return instance;
+            }
+        }
+
         public Step3()
         {
             InitializeComponent();
+            Context = DataContext;
         }
     }
 }

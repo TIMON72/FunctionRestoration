@@ -11,8 +11,8 @@
     <UserControl.DataContext>
         <model:Step3/>
     </UserControl.DataContext>
-    
+
     <Grid>
-        <oxy:PlotView Model="{Binding Model}"/>    
+        <oxy:PlotView Model="{Binding Model}"/>
     </Grid>
 </UserControl>

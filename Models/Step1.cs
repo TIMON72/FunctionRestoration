@@ -27,7 +27,7 @@ namespace FunctionRestoration.Models
                 MarkerType = MarkerType.Circle,
                 MarkerFill = OxyColor.FromRgb(0, 200, 0)
             };
-            for (double i = 0.1; i < 10;  i += 0.1)
+            for (double i = -1; i < 1;  i += 0.02)
             {
                 DataPoint dp = new DataPoint(i, Main.Func(i));
                 Points.Add(dp);

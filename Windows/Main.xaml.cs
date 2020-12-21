@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FunctionRestoration.Windows
 {
@@ -17,22 +11,29 @@ namespace FunctionRestoration.Windows
     /// </summary>
     public partial class Main : Window
     {
-        public static double Func(double x) => 8 * x - 3;
+        public static double Func(double x) => Math.Sin(x * 10) * 0.5;
 
         int stepNum = 0;
         readonly List<dynamic> StepsList = new List<dynamic>
         {
-            new Step0(),
-            new Step1(),
-            new Step2(),
-            new Step3()
+            Step0.Instance,
+            Step1.Instance,
+            Step2.Instance,
+            Step3.Instance
         };
-
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public Main()
         {
             InitializeComponent();
+            DataContext = Step3.Context;
             Step.Content = StepsList[0];
             B_PreviousStep.Visibility = Visibility.Hidden;
+            L_Degree.Visibility = Visibility.Hidden;
+            TB_Degree.Visibility = Visibility.Hidden;
+            L_Accuracy.Visibility = Visibility.Hidden;
+            TB_Accuracy.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// Событие нажатия кнопки "Далее"
@@ -45,7 +46,13 @@ namespace FunctionRestoration.Windows
             Step.Content = StepsList[stepNum];
             B_PreviousStep.Visibility = Visibility.Visible;
             if (stepNum == StepsList.Count - 1)
+            {
                 B_NextStep.Visibility = Visibility.Hidden;
+                L_Degree.Visibility = Visibility.Visible;
+                TB_Degree.Visibility = Visibility.Visible;
+                L_Accuracy.Visibility = Visibility.Visible;
+                TB_Accuracy.Visibility = Visibility.Visible;
+            }           
         }
         /// <summary>
         /// Событие нажатия кнопки "Назад"
@@ -57,6 +64,11 @@ namespace FunctionRestoration.Windows
             stepNum--;
             Step.Content = StepsList[stepNum];
             B_NextStep.Visibility = Visibility.Visible;
+            B_PreviousStep.Visibility = Visibility.Hidden;
+            L_Degree.Visibility = Visibility.Hidden;
+            TB_Degree.Visibility = Visibility.Hidden;
+            L_Accuracy.Visibility = Visibility.Hidden;
+            TB_Accuracy.Visibility = Visibility.Hidden;
             if (stepNum == 0)
                 B_PreviousStep.Visibility = Visibility.Hidden;
         }
@@ -68,27 +80,28 @@ namespace FunctionRestoration.Windows
         private void TB_Degree_TextChanged(object sender, TextChangedEventArgs e)
         {
             string input = TB_Degree.Text;
+            // Проверка на пустоту
             if (input == "")
                 return;
+            // Проверка на число
             int inputNum;
             try
             {
                 inputNum = int.Parse(input);
-            } 
+            }
             catch (Exception)
             {
                 MessageBox.Show("Введите число", "Ошибка ввода");
                 return;
             }
-            if (inputNum < 1 || inputNum > 9)
+            // Проверка на диапазон
+            if (inputNum < 1 || inputNum > 50)
             {
                 MessageBox.Show("Введите число в диапазоне [1; 9]", "Ошибка ввода");
                 return;
             }
-            Models.Step3.Degree = inputNum;
-            StepsList[3] = new Step3();
-            if (stepNum == 3)
-                Step.Content = StepsList[3];
+            BindingExpression be = TB_Degree.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
         }
     }
 }

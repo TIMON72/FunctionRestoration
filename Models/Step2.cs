@@ -31,7 +31,7 @@ namespace FunctionRestoration.Models
             Random random = new Random();
             foreach (DataPoint dp in Step1.Points)
             {
-                double noiseY = random.Next(-40, 40) * 0.1;
+                double noiseY = random.Next(-5, 5) * 0.05;
                 Points.Add(new DataPoint(dp.X, dp.Y + noiseY));
                 ss.Points.Add(new ScatterPoint(dp.X, dp.Y + noiseY));
             }
