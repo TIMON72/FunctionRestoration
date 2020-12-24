@@ -11,7 +11,8 @@ namespace FunctionRestoration.Windows
     /// </summary>
     public partial class Main : Window
     {
-        public static double Func(double x) => Math.Sin(x * 10) * 0.5;
+        public static double Func(double x) => Math.Sin(x * 5) * 0.5;
+        public static double DeltaX { get; set; } = 0.01;
 
         int stepNum = 0;
         readonly List<dynamic> StepsList = new List<dynamic>
@@ -95,7 +96,7 @@ namespace FunctionRestoration.Windows
                 return;
             }
             // Проверка на диапазон
-            if (inputNum < 1 || inputNum > 50)
+            if (inputNum < 1 || inputNum > 10)
             {
                 MessageBox.Show("Введите число в диапазоне [1; 9]", "Ошибка ввода");
                 return;

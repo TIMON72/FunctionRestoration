@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using FunctionRestoration.Windows;
+using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
@@ -64,14 +65,15 @@ namespace FunctionRestoration.Models
             double sum = 0;
             double sum2 = 0;
             //for (int i = 1; i <= Degree; i++)
-            //    sum =+ Points[i].Y * FI[n, i];
+            //    sum = +Points[i].Y * FI[n, i];
             //A[n] = 2 * sum / Degree;
             for (int i = 0; i <= Degree; i++)
             {
-                sum += Points[i].Y * FI[n, i];
-                sum2 += Math.Pow(FI[n, i], 2);
+                double fi = FI[n, i] / Math.Sqrt(Math.Pow(FI[n, i], 2) * Main.DeltaX);
+                sum += Points[i].Y * fi * Main.DeltaX;
+                //sum2 += Math.Sqrt(Math.Pow(FI[n, i], 2) * 0.02);
             }
-            A[n] = sum / sum2;
+            A[n] = sum;// / sum2;
         }
         /// <summary>
         /// Изменение размера двумерного массива
